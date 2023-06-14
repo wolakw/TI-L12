@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content=ie=edge"">
+    <link rel="stylesheet" href="/styl.css" />
+    <title>Logowanie</title>
+</head>
+<body>
+<form method="POST">
+    <div id='login'>
+        <div>
+            <h4>Logowanie</h4>
+        </div>
+        <div>
+            <label>Login:</label> <input type="text" name="txtUser" />
+        </div>
+        <div>
+            <label>Hasło:</label> <input type="password" name="txtPass" />
+        </div>
+        <div>
+            <button>Zaloguj</button>
+        </div>
+        <% if ( locals.komunikat) { %>
+            <div class='message'>
+                <%= locals.komunikat %>
+            </div>
+        <% } %>
+    </div>
+</form>
+</body>
+</html>
