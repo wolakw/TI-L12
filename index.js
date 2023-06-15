@@ -55,6 +55,7 @@ let uzytkownicy = [
     { id: 1, user: 'user', password: 'user', role: '1'},
     { id: 2, user: 'admin', password: 'admin', role: '2'},
 ]
+let kolejneId = 3;
 
 app.get('/api/lista', (req, res) => {
     res.send(lista);
@@ -200,6 +201,52 @@ app.get('/wyloguj', autoryzuj, (req, res) => {
 app.get('/', (req, res) => {
     uzytkownikCiastko = req.signedCookies.uzytkownik;
     res.render('index', {uzytkownik: uzytkownikCiastko});
+});
+
+
+app.get('/uzytkownicy',autoryzuj ,(req, res) => {
+    const uzytkownikCiastko = req.signedCookies.uzytkownik;
+    res.render('uzytkownicy', { uzytkownicy: uzytkownicy, uzytkownik: uzytkownikCiastko });
+});
+
+
+app.post('/uzytkownicy/dodaj', (req, res) => {
+    const { user, password, role } = req.body;
+    const newUser = { id: kolejneId, user, password, role };
+    uzytkownicy.push(newUser);
+    kolejneId++;
+    res.redirect('/uzytkownicy');
+});
+
+app.get('/uzytkownicy/usun/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    uzytkownicy = uzytkownicy.filter((user) => user.id !== id);
+    res.redirect('/uzytkownicy');
+});
+
+app.get('/uzytkownik/edycja/:id', (req, res) => {
+    const userId = req.params.id;
+    const uzytkownik = uzytkownicy.find(l => l.id === parseInt(req.params.id));
+
+    res.render('edycjaUzytkownika', { uzytkownik: uzytkownik });
+});
+
+
+app.post('/uzytkownicy/edytuj/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const { user, password, role } = req.body;
+    const index = uzytkownicy.findIndex((user) => user.id === id);
+    uzytkownicy[index] = { id, user, password, role };
+    res.redirect('/uzytkownicy');
+});
+
+app.get('/uzytkownicy/:id', (req, res) => {
+    // const id = parseInt(req.params.id);
+    // const user = uzytkownicy.find((user) => user.id === id);
+    // res.render('uzytkownik', { user });
+    let element = uzytkownicy.find(l => l.id === parseInt(req.params.id));
+    if(!element) res.status(404).send('Użytkownik o takim ID nie został znaleziony');
+    else res.send(element);
 });
 
 

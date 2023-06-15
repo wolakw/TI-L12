@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content=ie=edge">
+    <link rel="stylesheet" href="/styl.css" />
+    <title>TI-Lab12 Użytkownicy</title>
+    <script>
+        console.log('Rola użytkownika:', <%= uzytkownik %>);
+    </script>
+</head>
+<body>
+<table style="width: 100%;">
+    <tr>
+        <th>ID</th>
+        <th>Użytkownik</th>
+        <th>Hasło</th>
+        <th>Rola</th>
+        <th>Akcje</th>
+        <th>Zaloguj</th>
+    </tr>
+    <% uzytkownicy.forEach(element => { %>
+        <tr>
+            <td>
+                <%= element.id %>
+            </td>
+            <td>
+                <%= element.user %>
+            </td>
+            <td>
+                <%= element.password %>
+            </td>
+            <td>
+                <%= element.role %>
+            </td>
+            <td>
+                <a href="/uzytkownicy/<%= element.id %>">Wyświetl</a>
+                <a href="/uzytkownik/edycja/<%= element.id %>">Edytuj</a>
+                <a href="/uzytkownicy/usun/<%= element.id %>">Usuń</a>
+            </td>
+            <td>
+                <form method="POST" action="/zaloguj">
+                    <input type="hidden" name="txtUser" value="<%= element.user %>" />
+                    <input type="hidden" name="txtPass" value="<%= element.password %>" />
+                    <button type="submit">Zaloguj</button>
+                </form>
+            </td>
+        </tr>
+    <% }) %>
+</table>
+<% if (uzytkownik && uzytkownik === 'admin') { %>
+    <form method="POST" action="/uzytkownicy/dodaj">
+        <h2>Dodaj użytkownika</h2>
+        <div>
+            <label>Użytkownik:</label>
+            <input type="text" name="user" />
+        </div>
+        <div>
+            <label>Hasło:</label>
+            <input type="password" name="password" />
+        </div>
+        <div>
+            <label>Rola:</label>
+            <input type="text" name="role" />
+        </div>
+        <button type="submit">Dodaj</button>
+    </form>
+<% } %>
+</body>
+</html>

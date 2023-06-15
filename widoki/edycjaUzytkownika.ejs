@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/styl.css" />
+    <title>Edycja użytkownika</title>
+</head>
+<body>
+<h1>Edycja użytkownika</h1>
+
+<form method="POST" action="/uzytkownik/edycja/<%= uzytkownik.id %>">
+    <div>
+        <label for="txtUser">Login:</label>
+        <input type="text" id="txtUser" name="txtUser" value="<%= uzytkownik.user %>" />
+    </div>
+    <div>
+        <label for="txtPass">Hasło:</label>
+        <input type="password" id="txtPass" name="txtPass" value="<%= uzytkownik.password %>" />
+    </div>
+    <div>
+        <label for="txtRole">Rola:</label>
+        <input type="text" id="txtRole" name="txtRole" value="<%= uzytkownik.role %>" />
+    </div>
+    <div>
+        <button type="submit">Zapisz</button>
+    </div>
+</form>
+</body>
+</html>
